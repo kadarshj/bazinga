@@ -1,0 +1,61 @@
+{% extends 'basedash.html' %}
+{% load staticfiles %}
+{% block title %}Shopify Order List{% endblock %}
+{% block body %}
+
+<section class="container">
+<div class="container-fluid art-container">
+  <div class="page-header"><h3 class="headstyle text-center">Shopify Order List</h3></div>
+    <!-- Albums -->
+    <div class="row">
+        {% if lst %}
+             <table class="table table-hover">
+            <thead>
+      <tr>
+        <th>Order Number</th>
+        <th>Phone</th>
+        <th>Email</th>
+          <th>Price</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+            {% for lst in lst %}
+
+      <tr>
+        <td>{{ lst.order_number }}</td>
+        <td>{{ lst.phone }}</td>
+        <td>{{ lst.email }}</td>
+          <td>{{ lst.total_price }}</td>
+          <td>
+              <a href="#"><form style="border: none;padding: 0%;" method="post" action="{% url 'shopify_update' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ lst.id }}"/>
+                <button type="submit" style="border: none;background: none !important;padding: 0! important;outline: inherit !important;color: #000000;"><i class="fa fa-edit" style="color: black;"></i></button></form></a>
+
+              </td>
+      </tr>
+
+
+            {% endfor %}
+
+            </tbody>
+            </table>
+
+        {% else %}
+            <div class="col-sm-12">
+            <h1>No Shopify Orders List</h1>
+                {% comment %}<br>
+                <a href="#">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                    </button>
+                </a>{% endcomment %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</section>
+{% endblock %}
